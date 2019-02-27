@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1= `${title}: ${book.title}`
+
+  if instances.length
+    p #[strong There are instances need to be deleted before removal]
+    ul
+    each instance in instances 
+      li
+        a(href=instance.url) #{instance.imprint}
+  else
+    p Do you really want do delete this book
+    form(method='POST' action='')
+      div.form-group
+        input.form-control(type='hidden' name='bookid' required='true' value=book._id)
+      button.btn.btn-primary(type='submit') Delete

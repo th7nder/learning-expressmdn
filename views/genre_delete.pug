@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1= `${title}: ${genre.name}`
+
+  if books.length
+    p #[strong There are books need to be deleted before removal]
+    ul
+    each book in books
+      li
+        a(href=book.url) #{book.title}
+  else
+    p Do you really want do delete this genre
+    form(method='POST' action='')
+      div.form-group
+        input.form-control(type='hidden' name='genreid' required='true' value=genre._id)
+      button.btn.btn-primary(type='submit') Delete

@@ -1,0 +1,39 @@
+extends layout
+
+block content
+  h1 #{title}: #{book.title}
+  p #[strong Author:] 
+    a(href=book.author.url) #{book.author.name}
+  p #[strong Summary:] #{book.summary}
+  p #[strong ISBN:] #{book.isbn}
+  p #[strong Genres:]&nbsp;
+    each genre, index in book.genre
+      a(href=genre.url) #{genre.name}
+      if index < book.genre.length - 1
+        | , 
+
+  div(style='margin-top: 20px; margin-left: 20px;')
+    h4 Copies
+      each instance in instances
+        hr
+        if instance.status == 'Available'
+          p.text-success #{instance.status}
+        else if instance.status == 'Maintenance'
+          p.text-danger #{instance.status}
+        else
+          p.text-warning #{instance.status}
+
+        p #[strong Imprint]: #{instance.imprint}
+        if instance.status != 'Available'
+        p #[strong Due back:] #{instance.due_back_formatted}
+        p #[strong Id:]&nbsp;
+          a(href=instance.url) #{instance._id}
+      else
+        p There are no instances of this book
+  hr
+  p
+    a(href=book.url+'/delete') Delete Book
+  p
+    a(href=book.url+'/update') Update Book
+
+        
